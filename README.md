@@ -115,7 +115,7 @@ This repository includes a GitHub Actions workflow that runs the Chrome test on 
 
 ## Learn More
 
-- [TestingBot Documentation](https://testingbot.com/support)
+- [TestingBot Puppeteer Documentation](https://testingbot.com/support/puppeteer)
 - [Puppeteer Documentation](https://pptr.dev/)
 - [Jest Documentation](https://jestjs.io/)
 - [WebdriverIO Documentation](https://webdriver.io/)
