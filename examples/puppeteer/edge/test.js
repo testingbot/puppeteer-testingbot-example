@@ -1,13 +1,20 @@
 const puppeteer = require('puppeteer-core');
 
-const TB_KEY = process.env.TB_KEY || 'Your TestingBot Key';
-const TB_SECRET = process.env.TB_SECRET || 'Your TestingBot Secret';
-
 (async () => {
   console.log('Launching Edge on TestingBot...');
   
+  const capabilities = {
+    'tb:options': {
+        key: process.env.TB_KEY,
+        secret: process.env.TB_SECRET,
+        name: 'Puppeteer Edge Test'
+    },
+    browserName: 'edge',
+    browserVersion: 'latest',
+    platform: 'WIN10',
+  };
   const browser = await puppeteer.connect({
-    browserWSEndpoint: `wss://${TB_KEY}:${TB_SECRET}@cloud.testingbot.com/puppeteer?browserName=edge&browserVersion=latest&platform=WIN10&name=Puppeteer-Edge-Example&screenRecorder=true`
+    browserWSEndpoint: `wss://cloud.testingbot.com/puppeteer?capabilities=${encodeURIComponent(JSON.stringify(capabilities))}`
   });
   
   try {
@@ -22,9 +29,9 @@ const TB_SECRET = process.env.TB_SECRET || 'Your TestingBot Secret';
     await page.screenshot({ path: 'testingbot-edge.png' });
     console.log('Screenshot taken');
     
-    await page.waitForSelector('.navbar-brand');
+    await page.waitForSelector('.navigation span');
     const logoText = await page.evaluate(() => {
-      return document.querySelector('.navbar-brand').innerText;
+      return document.querySelector('.navigation span').innerText;
     });
     
     console.log(`Found logo text: ${logoText}`);

@@ -17,7 +17,6 @@ exports.config = {
     platformName: 'WIN10',
     'tb:options': {
       name: 'WebdriverIO Example Test',
-      screenRecorder: true,
       build: 'webdriverio-testingbot-example'
     }
   }],
