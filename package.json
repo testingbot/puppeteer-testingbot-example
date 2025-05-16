@@ -1,0 +1,27 @@
+{
+  "name": "puppeteer-testingbot-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test:puppeteer:chrome": "node examples/puppeteer/chrome/test.js",
+    "test:puppeteer:firefox": "node examples/puppeteer/firefox/test.js",
+    "test:puppeteer:edge": "node examples/puppeteer/edge/test.js",
+    "test:jest": "jest",
+    "test:webdriverio": "wdio run ./examples/webdriverio/wdio.conf.js",
+    "test": "npm run test:puppeteer:chrome"
+  },
+  "keywords": ["puppeteer", "testingbot", "automation", "testing", "browser", "jest", "webdriverio"],
+  "author": "",
+  "license": "MIT",
+  "description": "Examples of running Puppeteer tests on TestingBot's browser cloud",
+  "dependencies": {
+    "@wdio/cli": "^9.14.0",
+    "@wdio/local-runner": "^9.14.0",
+    "@wdio/mocha-framework": "^9.14.0",
+    "@wdio/spec-reporter": "^9.14.0",
+    "jest": "^29.7.0",
+    "puppeteer": "^24.8.2",
+    "puppeteer-core": "^24.8.2",
+    "webdriverio": "^9.14.0"
+  }
+}
