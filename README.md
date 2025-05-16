@@ -11,7 +11,7 @@ This repository contains examples of how to run [Puppeteer](https://pptr.dev/) t
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/puppeteer-testingbot-example.git
+git clone https://github.com/testingbot/puppeteer-testingbot-example.git
 cd puppeteer-testingbot-example
 ```
 
@@ -67,7 +67,7 @@ When running tests on TestingBot with Puppeteer, you can use various options to 
 
 - **browserName**: Choose from Chrome, Edge, Firefox
 - **browserVersion**: Specify browser version (e.g., "latest", "*", "<=16")
-- **platform**: Select OS like WIN10, WIN11, SONOMA
+- **platform**: Select OS like WIN10, WIN11, SEQUOIA, LINUX
 
 ### Test Configuration
 
@@ -96,22 +96,22 @@ When running tests on TestingBot with Puppeteer, you can use various options to 
 Example usage:
 
 ```javascript
+const capabilities = {
+  'tb:options': {
+      key: process.env.TB_KEY,
+      secret: process.env.TB_SECRET,
+      name: 'Puppeteer Chrome Test'
+  },
+  browserName: 'chrome',
+  browserVersion: 'latest',
+  platform: 'WIN10',
+};
 const browser = await puppeteer.connect({
-  browserWSEndpoint: `wss://${TB_KEY}:${TB_SECRET}@cloud.testingbot.com/puppeteer?browserName=chrome&browserVersion=latest&platform=WIN10&name=My%20Test&build=Build123&screenRecorder=true&timeZone=America/New_York&screen-resolution=1920x1080`
+  browserWSEndpoint: `wss://cloud.testingbot.com/puppeteer?capabilities=${encodeURIComponent(JSON.stringify(capabilities))}`
 });
 ```
 
 For a complete list of options, visit the [TestingBot Puppeteer Options documentation](https://testingbot.com/support/puppeteer/options.html).
-
-## GitHub Actions Integration
-
-This repository includes a GitHub Actions workflow that runs the Chrome test on TestingBot. To use it, add your TestingBot credentials as GitHub secrets:
-
-1. Go to your GitHub repository settings
-2. Navigate to Secrets > Actions
-3. Add two secrets:
-   - `TB_KEY`: Your TestingBot key
-   - `TB_SECRET`: Your TestingBot secret
 
 ## Learn More
 
