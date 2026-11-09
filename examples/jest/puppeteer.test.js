@@ -1,21 +1,31 @@
 const puppeteer = require('puppeteer-core');
 
-const TB_KEY = process.env.TB_KEY || 'Your TestingBot Key';
-const TB_SECRET = process.env.TB_SECRET || 'Your TestingBot Secret';
+const capabilities = {
+  'tb:options': {
+    key: process.env.TB_KEY,
+    secret: process.env.TB_SECRET,
+    name: 'Jest-Puppeteer-Example'
+  },
+  browserName: 'chrome',
+  browserVersion: 'latest',
+  platform: 'WIN10'
+};
 
 let browser;
 let page;
 
 beforeAll(async () => {
   browser = await puppeteer.connect({
-    browserWSEndpoint: `wss://${TB_KEY}:${TB_SECRET}@cloud.testingbot.com/puppeteer?browserName=chrome&browserVersion=latest&platform=WIN10&name=Jest-Puppeteer-Example&screenRecorder=true`
+    browserWSEndpoint: `wss://cloud.testingbot.com/puppeteer?capabilities=${encodeURIComponent(JSON.stringify(capabilities))}`
   });
   page = await browser.newPage();
   await page.setViewport({ width: 1366, height: 768 });
 });
 
 afterAll(async () => {
-  await browser.close();
+  if (browser) {
+    await browser.close();
+  }
 });
 
 test('TestingBot homepage title should be correct', async () => {
@@ -25,18 +35,16 @@ test('TestingBot homepage title should be correct', async () => {
 }, 30000);
 
 test('TestingBot logo should be visible', async () => {
-  await page.waitForSelector('.navbar-brand');
+  await page.waitForSelector('.navigation span');
   const logoText = await page.evaluate(() => {
-    return document.querySelector('.navbar-brand').innerText;
+    return document.querySelector('.navigation span').innerText;
   });
   expect(logoText).toContain('TestingBot');
 }, 10000);
 
-test('TestingBot features section should exist', async () => {
-  const featuresExist = await page.evaluate(() => {
-    return document.querySelectorAll('.features').length > 0;
-  });
-  expect(featuresExist).toBe(true);
+test('TestingBot navigation should link to the features page', async () => {
+  const featuresLinks = await page.$$('a[href="/features"]');
+  expect(featuresLinks.length).toBeGreaterThan(0);
 }, 10000);
 
 test('Take a screenshot', async () => {
