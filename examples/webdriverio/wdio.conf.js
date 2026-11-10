@@ -5,8 +5,9 @@ exports.config = {
   user: TB_KEY,
   key: TB_SECRET,
   
+  // Spec paths are resolved relative to this config file
   specs: [
-    './examples/webdriverio/test.js'
+    './test.js'
   ],
   
   maxInstances: 1,

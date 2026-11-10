@@ -5,14 +5,13 @@ describe('TestingBot Website', () => {
   });
 
   it('should display the TestingBot logo', async () => {
-    await $('.navbar-brand').waitForExist();
-    const logoText = await $('.navbar-brand').getText();
-    await expect(logoText).toContain('TestingBot');
+    const logo = await $('.navigation span');
+    await logo.waitForExist();
+    await expect(logo).toHaveText(expect.stringContaining('TestingBot'));
   });
 
-  it('should have a features section', async () => {
-    const featuresSection = await $('.features');
-    await expect(featuresSection).toExist();
+  it('should link to the features page', async () => {
+    await expect($('a[href="/features"]')).toExist();
   });
 
   it('should take a screenshot', async () => {
