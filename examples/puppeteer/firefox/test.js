@@ -13,7 +13,9 @@ const puppeteer = require('puppeteer-core');
     platform: 'WIN10',
   };
   const browser = await puppeteer.connect({
-    browserWSEndpoint: `wss://cloud.testingbot.com/puppeteer?capabilities=${encodeURIComponent(JSON.stringify(capabilities))}`
+    browserWSEndpoint: `wss://cloud.testingbot.com/puppeteer?capabilities=${encodeURIComponent(JSON.stringify(capabilities))}`,
+    // Firefox has no CDP (removed in Firefox 129): Puppeteer drives it over WebDriver BiDi
+    protocol: 'webDriverBiDi'
   });
   
   try {
